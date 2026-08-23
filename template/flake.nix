@@ -1,10 +1,13 @@
 {
-  description = "Nix RTOS devshell flake";
-
   inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+  inputs.rtos-nix = "github:zainkergaye-projects/rtos.nix";
 
   outputs =
-    { self, nixpkgs }:
+    {
+      self,
+      nixpkgs,
+      rtos-nix,
+    }:
     let
       supportedSystems = [
         "x86_64-linux"
@@ -15,26 +18,12 @@
       pkgs = forAllSystems (system: nixpkgs.legacyPackages.${system});
     in
     {
-      templates.default = {
-        path = ./template;
-        description = "Nix RTOS flake template";
-      };
-
       packages = forAllSystems (system: {
         default = pkgs.${system}.hello;
       });
 
       devShells = forAllSystems (system: {
-        default = pkgs.${system}.mkShellNoCC {
-          packages = with pkgs.${system}; [
-            cmake
-            gcc-arm-embedded
-            picotool
-            openocd
-            python314Packages.robotframework # Test framework
-            renode
-          ];
-        };
+        default = rtos-nix.devShells.${system}.default;
       });
     };
 }
