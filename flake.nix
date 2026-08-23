@@ -6,7 +6,6 @@
     let
       supportedSystems = [
         "x86_64-linux"
-        "x86_64-darwin"
         "aarch64-linux"
         "aarch64-darwin"
       ];
@@ -21,7 +20,11 @@
       devShells = forAllSystems (system: {
         default = pkgs.${system}.mkShellNoCC {
           packages = with pkgs.${system}; [
-            hello
+            cmake
+            gcc-arm-embedded
+            picotool
+            openocd
+            python314Packages.robotframework # Test framework
           ];
         };
       });
