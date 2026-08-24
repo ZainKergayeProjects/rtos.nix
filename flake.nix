@@ -2,9 +2,17 @@
   description = "Nix RTOS devshell flake";
 
   inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+  inputs.freertos = {
+    url = "git+https://github.com/raspberrypi/FreeRTOS-Kernel.git?submodules=1";
+    flake = false;
+  };
 
   outputs =
-    { self, nixpkgs }:
+    {
+      self,
+      nixpkgs,
+      freertos,
+    }:
     let
       supportedSystems = [
         "x86_64-linux"
@@ -36,7 +44,11 @@
             pico-sdk
           ];
           shellHook = ''
-            export PICO_SDK_PATH=\"${pkgs.${system}.pico-sdk}/lib/pico-sdk\"\n
+						export PICO_SDK_PATH=${pkgs.${system}.pico-sdk}/lib/pico-sdk
+						export FREERTOS_PATH=${freertos}
+						export OPENOCD_PATH=${pkgs.${system}.openocd}
+
+						echo "Welcome to dev shell. Imported PICO_SDK_PATH, FREERTOS_PATH, and OPENOCD_PATH"
           '';
         };
       });
