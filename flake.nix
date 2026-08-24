@@ -33,7 +33,11 @@
             openocd
             python314Packages.robotframework # Test framework
             renode
+            pico-sdk
           ];
+          shellHook = ''
+            export PICO_SDK_PATH=\"${pkgs.${system}.pico-sdk}/lib/pico-sdk\"\n
+          '';
         };
       });
     };
