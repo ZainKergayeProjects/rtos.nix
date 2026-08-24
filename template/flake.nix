@@ -1,6 +1,7 @@
 {
   inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-  inputs.rtos-nix = "github:zainkergaye-projects/rtos.nix";
+  inputs.rtos-nix.url = "github:ZainKergayeProjects/rtos.nix";
+  inputs.rtos-nix.inputs.nixpkgs.follows = "nixpkgs";
 
   outputs =
     {
