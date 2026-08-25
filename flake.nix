@@ -29,7 +29,8 @@
       };
 
       packages = forAllSystems (system: {
-        default = pkgs.${system}.hello;
+        default = self.packages.${system}.pico-sdk-overriden;
+        pico-sdk-overriden = pkgs.${system}.pico-sdk.override { withSubmodules = true; };
       });
 
       devShells = forAllSystems (system: {
@@ -41,10 +42,12 @@
             openocd
             python314Packages.robotframework # Test framework
             renode
-            pico-sdk
+            python3
+            picotool
+            self.packages.${system}.pico-sdk-overriden
           ];
           shellHook = ''
-						export PICO_SDK_PATH=${pkgs.${system}.pico-sdk}/lib/pico-sdk
+						export PICO_SDK_PATH=${self.packages.${system}.pico-sdk-overriden}/lib/pico-sdk
 						export FREERTOS_PATH=${freertos}
 						export OPENOCD_PATH=${pkgs.${system}.openocd}
 
