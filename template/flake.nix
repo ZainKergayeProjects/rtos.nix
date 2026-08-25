@@ -19,9 +19,33 @@
       pkgs = forAllSystems (system: nixpkgs.legacyPackages.${system});
     in
     {
-      packages = forAllSystems (system: {
-        default = pkgs.${system}.hello;
-      });
+      packages = forAllSystems (
+        system: {
+          default = pkgs.${system}.stdenv.mkDerivation {
+            name = "lab00";
+            src = ./.;
+            buildInputs = with pkgs.${system}; [
+              cmake
+              git
+              gcc-arm-embedded
+              python3
+							rtos-nix.packages.${system}.pico-sdk-overriden
+              picotool
+            ];
+            phases = [ "installPhase" ];
+            installPhase = ''
+							export PICO_SDK_PATH=${rtos-nix.packages.${system}.pico-sdk-overriden}/lib/pico-sdk
+							export FREERTOS_PATH=${rtos-nix.freertos}
+							export OPENOCD_PATH=${pkgs.${system}.openocd}
+							mkdir -p $out
+							cmake -B $out -S $src/
+							cd $out
+							cmake --build . --target all
+            '';
+          };
+
+        }
+      );
 
       devShells = forAllSystems (system: {
         default = rtos-nix.devShells.${system}.default;

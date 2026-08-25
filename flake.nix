@@ -55,5 +55,8 @@
           '';
         };
       });
+
+			# To limit flake inputs on other projects
+			freertos = freertos;
     };
 }
