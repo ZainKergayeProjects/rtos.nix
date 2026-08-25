@@ -37,7 +37,24 @@
     "root": {
       "inputs": {
         "freertos": "freertos",
-        "nixpkgs": "nixpkgs"
+        "nixpkgs": "nixpkgs",
+        "unity": "unity"
+      }
+    },
+    "unity": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1787666923,
+        "narHash": "sha256-8BqlnYKO9tnVT6rAH8iiyVax9BYfhL61w+cLhvuajgI=",
+        "ref": "refs/heads/master",
+        "rev": "2b67b99a4a87db87ff8c28a3b7e405c3e56d65f0",
+        "revCount": 1468,
+        "type": "git",
+        "url": "https://github.com/ThrowTheSwitch/Unity.git"
+      },
+      "original": {
+        "type": "git",
+        "url": "https://github.com/ThrowTheSwitch/Unity.git"
       }
     }
   },
