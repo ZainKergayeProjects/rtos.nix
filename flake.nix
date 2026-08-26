@@ -52,6 +52,7 @@
             renode
             python3
             picotool
+						pioasm
             self.packages.${system}.pico-sdk-overriden
           ];
           shellHook = ''
