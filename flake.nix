@@ -54,6 +54,8 @@
             picotool
 						pioasm
             self.packages.${system}.pico-sdk-overriden
+						python314Packages.python-periphery
+						python314Packages.requests
           ];
           shellHook = ''
 						export PICO_SDK_PATH=${self.packages.${system}.pico-sdk-overriden}/lib/pico-sdk
