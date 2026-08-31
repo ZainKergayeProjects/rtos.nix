@@ -25,18 +25,21 @@
             name = "lab00";
             src = ./.;
             buildInputs = with pkgs.${system}; [
-              cmake
-              git
-              gcc-arm-embedded
-              python3
+							cmake
+							git
+							gcc-arm-embedded
+							python3
 							rtos-nix.packages.${system}.pico-sdk-overriden
-              picotool
+							picotool
+							unity-test
+							pioasm
             ];
             phases = [ "installPhase" ];
             installPhase = ''
 							export PICO_SDK_PATH=${rtos-nix.packages.${system}.pico-sdk-overriden}/lib/pico-sdk
 							export FREERTOS_PATH=${rtos-nix.freertos}
 							export OPENOCD_PATH=${pkgs.${system}.openocd}
+							export UNITY_PATH=${rtos-nix.unity}
 							mkdir -p $out
 							cmake -B $out -S $src/
 							cd $out
