@@ -47,7 +47,7 @@
             cmake
             gcc-arm-embedded
             picotool
-            openocd
+            openocd-rp2040
             python314Packages.robotframework # Test framework
             renode
             python3
