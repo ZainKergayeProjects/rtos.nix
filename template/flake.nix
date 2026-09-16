@@ -40,9 +40,9 @@
 						export OPENOCD_PATH=${pkgs.${system}.openocd}
 						export UNITY_PATH=${rtos-nix.unity}
 						mkdir -p $out
-						cmake -B $out -S $src/
+						cmake -B $out -S $src/ -DCMAKE_BUILD_TYPE=Debug 
 						cd $out
-						cmake --build . --target all
+						cmake --build . --target all -j6
 					'';
         };
 
