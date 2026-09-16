@@ -1,12 +1,10 @@
 {
-  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
   inputs.rtos-nix.url = "github:ZainKergayeProjects/rtos.nix";
   inputs.rtos-nix.inputs.nixpkgs.follows = "nixpkgs";
 
   outputs =
     {
       self,
-      nixpkgs,
       rtos-nix,
     }:
     let
@@ -15,8 +13,8 @@
         "aarch64-linux"
         "aarch64-darwin"
       ];
-      forAllSystems = nixpkgs.lib.genAttrs supportedSystems;
-      pkgs = forAllSystems (system: nixpkgs.legacyPackages.${system});
+      forAllSystems = rtos-nix.nixpkgs.lib.genAttrs supportedSystems;
+      pkgs = forAllSystems (system: rtos-nix.nixpkgs.legacyPackages.${system});
     in
     {
       packages = forAllSystems (system: {

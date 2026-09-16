@@ -73,5 +73,7 @@
 			freertos = freertos;
 			
 			unity = unity;
+
+			nixpkgs = nixpkgs;
     };
 }
