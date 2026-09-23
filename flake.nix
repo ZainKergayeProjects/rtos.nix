@@ -1,25 +1,24 @@
 {
   description = "Nix RTOS devshell flake";
 
-	inputs = {
-		nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-		freertos = {
-			url = "git+https://github.com/raspberrypi/FreeRTOS-Kernel.git?submodules=1";
-			flake = false;
-		};
-		unity= {
-			url = "git+https://github.com/ThrowTheSwitch/Unity.git";
-			flake = false;
-		};
-	};
-
+  inputs = {
+    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    freertos = {
+      url = "git+https://github.com/raspberrypi/FreeRTOS-Kernel.git?submodules=1";
+      flake = false;
+    };
+    unity = {
+      url = "git+https://github.com/ThrowTheSwitch/Unity.git";
+      flake = false;
+    };
+  };
 
   outputs =
     {
       self,
       nixpkgs,
       freertos,
-			unity,
+      unity,
     }:
     let
       supportedSystems = [
@@ -48,32 +47,27 @@
             gcc-arm-embedded
             picotool
             openocd-rp2040
-            python314Packages.robotframework # Test framework
-            renode
-            python3
             picotool
-						pioasm
+            pioasm
             self.packages.${system}.pico-sdk-overriden
-						python314Packages.python-periphery
-						python314Packages.requests
           ];
           shellHook = ''
-						export PICO_SDK_PATH=${self.packages.${system}.pico-sdk-overriden}/lib/pico-sdk
-						export FREERTOS_PATH=${freertos}
-						export OPENOCD_PATH=${pkgs.${system}.openocd}
-						export UNITY_PATH=${unity}
+            export PICO_SDK_PATH=${self.packages.${system}.pico-sdk-overriden}/lib/pico-sdk
+            export FREERTOS_PATH=${freertos}
+            export OPENOCD_PATH=${pkgs.${system}.openocd}
+            export UNITY_PATH=${unity}
 
 
-						echo "Welcome to dev shell. Imported PICO_SDK_PATH, FREERTOS_PATH, and OPENOCD_PATH"
+            echo "Welcome to dev shell. Imported PICO_SDK_PATH, FREERTOS_PATH, and OPENOCD_PATH"
           '';
         };
       });
 
-			# To limit flake inputs on other projects
-			freertos = freertos;
-			
-			unity = unity;
+      # To limit flake inputs on other projects
+      freertos = freertos;
 
-			nixpkgs = nixpkgs;
+      unity = unity;
+
+      nixpkgs = nixpkgs;
     };
 }
